@@ -1,12 +1,41 @@
-## Loyalty Coins System Implementation
+# ArenaOne Inventory & CRM Enhancement TODO
 
-### Remaining Steps:
-1. ✅ **Plan approved by user**
-2. ✅ **Update src/context/AuthContext.jsx**: Add arenaCredits to user state, dummy users, earnCredits(), redeemCredits(), getRedeemableValue(). Persist in sessionStorage.
-3. ✅ **Update src/context/ErpCrmContext.jsx**: In processCartCheckout, award credits via earnCredits(cartTotal) if user role=='user'.
-4. **Update src/pages/Checkout.jsx**: Add redemption UI (input/slider), netTotal calc, redeem before payment, update Razorpay amount/netTotal display/PDF/processCartCheckout(netTotal).
-5. **Update src/pages/Dashboard.jsx**: Dynamic credits display from user.arenaCredits.
-6. **Test**: Login user, add to cart, checkout redeem, verify earn/display/persist.
-7. **attempt_completion**
+## Approved Plan Steps (Frontend-only, dummyData.js central)
 
-Progress: 5/7 complete (Core files updated: Auth, ErpCrm, Checkout, Dashboard).
+### 1. [x] Update src/data/dummyData.js
+   - Add initialInventory[] (merge products + stock)
+   - Add initialUsers[] (with pw, arenaCredits, totalSpent)
+   - Add initialOrders[]
+
+**Progress: Step 1 ✅ → Step 2**
+
+### 2. [x] Update src/context/ErpCrmContext.jsx
+   - Init from dummyData + localStorage merge
+   - Add addInventoryItem(), deleteInventoryItem(), updateInventoryStock()
+   - Sync arenaCredits in crmUsers
+
+### 4. [x] Update src/pages/admin/AdminInventory.jsx
+   - Connect to useErpCrm()
+   - Use erpProducts, add/delete/update funcs
+
+**Progress: Step 4 ✅ → Step 3**
+
+### 3. [ ] Update src/context/AuthContext.jsx
+   - Use global users from ErpCrm
+   - login/register check/add to dummy/global users
+   - Persist credits globally
+
+### 4. [ ] Update src/pages/admin/AdminInventory.jsx
+   - Connect to useErpCrm()
+   - Use erpProducts, add/delete/update funcs
+
+### 5. [ ] Minor updates
+   - AdminDashboard.jsx, AdminOrders.jsx if needed (use transactions/crmUsers)
+
+### 6. [ ] Test & Complete
+   - Login/buy: inventory--, credits++, orders++
+   - Admin: add/delete inventory
+   - `npm run dev`
+   - attempt_completion
+
+**Progress: Starting Step 1**

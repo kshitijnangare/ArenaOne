@@ -1,68 +1,58 @@
 // src/pages/admin/AdminInventory.jsx
 import { useState, useMemo } from 'react';
-import { inventory as initialInventory } from '../../data/dummyData';
-import { Search, Edit, AlertTriangle, Plus, Download, Save, X, Trash2 } from 'lucide-react';
+import { useErpCrm } from '../../context/ErpCrmContext';
+import { Search, Edit, Plus, Download, X, Trash2 } from 'lucide-react';
 
 const AdminInventory = () => {
-    const [inventory, setInventory] = useState(initialInventory);
+    const { erpProducts, addInventoryItem, deleteInventoryItem, updateInventoryStock } = useErpCrm();
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('All');
-    const [editingItem, setEditingItem] = useState(null); // { id, stock }
+    const [editingItem, setEditingItem] = useState(null); // id 
     const [showAddModal, setShowAddModal] = useState(false);
-    const [newItem, setNewItem] = useState({ name: '', category: '', stock: 0, threshold: 5 });
+    const [newItem, setNewItem] = useState({ name: '', category: '', price: 0, stock_count: 0, low_threshold: 5 });
 
     const statuses = ['All', 'In Stock', 'Low Stock', 'Out of Stock'];
 
+    // Add status to products for display
+    const inventoryWithStatus = erpProducts.map(item => ({
+        ...item,
+        status: item.stock_count === 0 ? 'Out of Stock' : (item.stock_count < item.low_threshold ? 'Low Stock' : 'In Stock'),
+        stock: item.stock_count,
+        threshold: item.low_threshold
+    }));
+
     // Filtered inventory
     const filteredInventory = useMemo(() => {
-        return inventory.filter(item =>
+        return inventoryWithStatus.filter(item =>
             (statusFilter === 'All' || item.status === statusFilter) &&
             (item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                 item.id.toLowerCase().includes(searchTerm.toLowerCase()))
         );
-    }, [inventory, searchTerm, statusFilter]);
+    }, [inventoryWithStatus, searchTerm, statusFilter]);
 
-    // Update stock and recalc status
+    // Update stock using global func
     const updateStock = (id, newStock) => {
-        setInventory(inventory.map(item => {
-            if (item.id === id) {
-                const stock = Math.max(0, newStock);
-                let status = 'In Stock';
-                if (stock === 0) status = 'Out of Stock';
-                else if (stock < item.threshold) status = 'Low Stock';
-                return { ...item, stock, status };
-            }
-            return item;
-        }));
+        updateInventoryStock(id, newStock);
         setEditingItem(null);
     };
 
     const handleToggleOutOfStock = (id) => {
-        setInventory(inventory.map(item => {
-            if (item.id === id) {
-                const newStock = item.stock > 0 ? 0 : (item.threshold + 2); // mock restore to some stock
-                let status = newStock === 0 ? 'Out of Stock' : (newStock < item.threshold ? 'Low Stock' : 'In Stock');
-                return { ...item, stock: newStock, status };
-            }
-            return item;
-        }));
+        const currentStock = erpProducts.find(p => p.id === id)?.stock_count || 0;
+        const newStock = currentStock > 0 ? 0 : 10;
+        updateInventoryStock(id, newStock);
     };
 
     const handleDelete = (id) => {
         if (window.confirm('Delete this item?')) {
-            setInventory(inventory.filter(item => item.id !== id));
+            deleteInventoryItem(id);
         }
     };
 
     const handleAddItem = (e) => {
         e.preventDefault();
-        const newId = `INV-${String(inventory.length + 1).padStart(3, '0')}`;
-        let status = 'In Stock';
-        if (newItem.stock === 0) status = 'Out of Stock';
-        else if (newItem.stock < newItem.threshold) status = 'Low Stock';
-        setInventory([...inventory, { ...newItem, id: newId, status }]);
+        addInventoryItem(newItem);
         setShowAddModal(false);
-        setNewItem({ name: '', category: '', stock: 0, threshold: 5 });
+        setNewItem({ name: '', category: '', price: 0, stock_count: 0, low_threshold: 5 });
     };
 
     const handleExport = () => {

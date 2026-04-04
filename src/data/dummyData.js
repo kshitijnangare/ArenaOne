@@ -163,3 +163,43 @@ export const bundleProducts = [
         ]
     }
 ];
+
+// NEW: Initial Inventory data (for ERP, with stock)
+export const initialInventory = [
+    // Retail
+    { id: 'r1', name: 'Pro Performance Cricket Bat', category: 'Cricket', price: 450, stock_count: 55, low_threshold: 5 },
+    { id: 'r2', name: 'Signature Surf Wax - Tropical', category: 'Surfing', price: 15, stock_count: 42, low_threshold: 5 },
+    { id: 'r3', name: 'Alpine Explorer Tent', category: 'Camping', price: 320, stock_count: 12, low_threshold: 3 },
+    { id: 'r4', name: 'Precision Climbing Harness', category: 'Climbing', price: 120, stock_count: 18, low_threshold: 4 },
+    // Loop (depreciatedPrice)
+    { id: 'l1', name: 'Vintage Leather Cricket Ball', category: 'Cricket/Used', price: 15, stock_count: 35, low_threshold: 5 },
+    { id: 'l2', name: 'Carbon Fiber Road Bike', category: 'Cycling/Used', price: 1800, stock_count: 3, low_threshold: 1 },
+    { id: 'l3', name: 'Premium Yoga Mat', category: 'Fitness/Used', price: 35, stock_count: 28, low_threshold: 5 },
+    // Rental (dailyRate as price)
+    { id: 'rt1', name: 'GoPro Hero 11 Black', category: 'Rental/Electronics', price: 25, stock_count: 8, low_threshold: 2 },
+    { id: 'rt2', name: 'Heavy Duty Expedition Pack', category: 'Rental/Backpack', price: 15, stock_count: 15, low_threshold: 3 },
+    { id: 'rt3', name: 'Portable Solar Power Station', category: 'Rental/Power', price: 40, stock_count: 6, low_threshold: 2 },
+    // More samples
+    { id: 'extra1', name: 'Mountain Boots', category: 'Trekking', price: 250, stock_count: 20, low_threshold: 5 },
+    { id: 'extra2', name: 'Climbing Rope 50m', category: 'Climbing', price: 1800, stock_count: 4, low_threshold: 1 },
+    { id: 'extra3', name: 'Surfboard - Beginner', category: 'Surfing', price: 120, stock_count: 10, low_threshold: 2 }
+];
+
+// NEW: Initial Users (with pw plain for dummy, arenaCredits, totalSpent)
+export const initialUsers = [
+    { id: 'admin1', name: 'Admin System', email: 'admin@arena.com', password: 'admin123', arenaCredits: 0, totalSpent: 0, role: 'admin' },
+    { id: 'user1', name: 'User System', email: 'user@arena.com', password: 'user123', arenaCredits: 50, totalSpent: 1250, role: 'user' },
+    { id: 'u2', name: 'Alice Smith', email: 'alice@example.com', password: 'pass123', arenaCredits: 120, totalSpent: 1200, role: 'user' },
+    { id: 'u3', name: 'Bob Johnson', email: 'bob@example.com', password: 'pass456', arenaCredits: 45, totalSpent: 450, role: 'user' },
+    { id: 'u4', name: 'Diana Prince', email: 'diana@example.com', password: 'pass789', arenaCredits: 89, totalSpent: 890, role: 'user' },
+    { id: 'u5', name: 'John Doe', email: 'john@arena.com', password: 'user999', arenaCredits: 30, totalSpent: 300, role: 'user' }
+];
+
+// NEW: Initial Orders/Transactions
+export const initialOrders = [
+    { id: 'o1', timestamp: '2024-10-01 10:30', user: 'Alice Smith', product: '2x Cricket Bat', amount: 900, action: 'Purchase' },
+    { id: 'o2', timestamp: '2024-10-02 14:15', user: 'Bob Johnson', product: 'Surf Wax', amount: 15, action: 'Purchase' },
+    { id: 'o3', timestamp: '2024-10-03 09:45', user: 'Diana Prince', product: 'Tent + Harness', amount: 440, action: 'Purchase' },
+    { id: 'o4', timestamp: '2024-10-04 16:20', user: 'John Doe', product: 'GoPro Rental', amount: 25, action: 'Rental' }
+];
+
