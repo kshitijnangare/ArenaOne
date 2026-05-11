@@ -1,15 +1,12 @@
 const express = require('express');
+const { getInventory, addInventory, updateStock, deleteInventory } = require('../controllers/inventoryController');
+
 const router = express.Router();
-const { getItemTimeline, getInventoryLedger, logItemEvent } = require('../controllers/inventoryController');
 
-// For now, these are open, but in a production app they'd have auth middleware
-// GET /api/inventory/:itemId/timeline
-router.get('/:itemId/timeline', getItemTimeline);
-
-// GET /api/crm/inventory
-router.get('/crm/ledger', getInventoryLedger);
-
-// POST /api/crm/inventory/:itemId/log
-router.post('/crm/:itemId/log', logItemEvent);
+router.get('/', getInventory);
+router.post('/', addInventory);
+router.patch('/:id', updateStock);
+router.delete('/:id', deleteInventory);
 
 module.exports = router;
+
