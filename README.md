@@ -257,7 +257,7 @@ This project is for educational purposes. All rights reserved by the authors.
 ## Links
 
 - **Live Application:** [https://arena-iota-two.vercel.app/](https://arena-iota-two.vercel.app/)
-- **GitHub Repository:** [https://github.com/yourusername/arena-one](https://github.com/yourusername/arena-one)
+- **GitHub Repository:** [https://github.com/yourusername/arena-one](https://github.com/kshitijnangare/ArenaOne)
 - **Backend API (Render):** `https://arena-one-api.onrender.com`
 
 ---
